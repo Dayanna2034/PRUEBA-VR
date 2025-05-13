@@ -3,7 +3,7 @@ import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
 import { VRButton } from 'three/addons/webxr/VRButton.js';
 
 const scene = new THREE.Scene();
-const camera = new THREE.PerspectiveCamera( 75, window.innerWidth / window.innerHeight, 0.1, 1000 );
+const camera = new THREE.PerspectiveCamera( 70, window.innerWidth / window.innerHeight, 0.1, 1000 );
 const renderer = new THREE.WebGLRenderer();
 renderer.setSize( window.innerWidth, window.innerHeight );
 renderer.setAnimationLoop( animate );
@@ -23,11 +23,26 @@ scene.add( cube );
 
 camera.position.z = 5;
 
+let px=0;
+let py=0;
+
 function animate() {
-
-  cube.rotation.x += 0.01;
+  if(px>window.innerWidth/2)
+  {
   cube.rotation.y += 0.01;
-
+  
+  }else{
+    cube.rotation.y -= 0.01;
+  }
   renderer.render( scene, camera );
 
 }
+function onPointerMove( event ) {
+
+  console.log("x="+event.clientX+"  y="+event.clientY) //para mover segun la posicion del mouse
+  px=event.clientX;
+  py=event.clientY;
+
+}
+
+window.addEventListener( 'pointermove', onPointerMove );
